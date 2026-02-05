@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Birthday Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .tagline {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .wish-text {
+            text-align: center;
+            margin-top: 5px;
+            color: darkgreen;
+            font-style: italic;
+        }
+
+        .wish-form {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        const PASSWORD = "lilly@2004";
+
+        function showEnterForm(cardId) {
+            const card = document.getElementById(cardId);
+
+            // Check if form already exists
+            if (card.querySelector(".wish-form")) return;
+
+            // Create form container
+            const form = document.createElement("div");
+            form.classList.add("wish-form");
+
+            // Tagline input
+            const taglineInput = document.createElement("input");
+            taglineInput.type = "text";
+            taglineInput.placeholder = "Enter Tagline";
+            taglineInput.classList.add("form-control", "mb-2", "tagline-input");
+
+            // Wish input
+            const wishInput = document.createElement("input");
+            wishInput.type = "text";
+            wishInput.placeholder = "Enter Wish";
+            wishInput.classList.add("form-control", "mb-2", "wish-input");
+
+            // Submit button
+            const submitBtn = document.createElement("button");
+            submitBtn.innerText = "Submit Wish";
+            submitBtn.classList.add("btn", "btn-primary", "btn-sm");
+            submitBtn.onclick = function () { submitWish(cardId); };
+
+            // Append elements to form
+            form.appendChild(taglineInput);
+            form.appendChild(wishInput);
+            form.appendChild(submitBtn);
+
+            card.querySelector(".card-body").appendChild(form);
+        }
+
+        function submitWish(cardId) {
+            const card = document.getElementById(cardId);
+            const taglineInput = card.querySelector(".tagline-input");
+            const wishInput = card.querySelector(".wish-input");
+
+            const tagline = taglineInput.value.trim();
+            const wish = wishInput.value.trim();
+
+            // Display tagline below card title
+            let taglineElem = card.querySelector(".tagline");
+            if (!taglineElem) {
+                taglineElem = document.createElement("p");
+                taglineElem.classList.add("tagline");
+                const title = card.querySelector(".card-title");
+                title.insertAdjacentElement("afterend", taglineElem);
+            }
+            taglineElem.textContent = tagline;
+
+            // Store wish in card dataset (hidden)
+            card.dataset.wish = wish;
+
+            // Remove form after submission
+            card.querySelector(".wish-form").remove();
+        }
+
+        function viewWish(cardId) {
+            const card = document.getElementById(cardId);
+            const wish = card.dataset.wish;
+
+            if (!wish) {
+                alert("No wish has been entered yet!");
+                return;
+            }
+
+            const password = prompt("Enter password to view wish:");
+
+            if (password === PASSWORD) {
+                let wishElem = card.querySelector(".wish-text");
+                if (!wishElem) {
+                    wishElem = document.createElement("p");
+                    wishElem.classList.add("wish-text");
+                    card.querySelector(".tagline").insertAdjacentElement("afterend", wishElem);
+                }
+                wishElem.textContent = wish;
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-danger">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src=" C:\Users\Preethi.J\OneDrive\Pictures\134044877439860183.jpg" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Lilly
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <p class="fw-bold text-center fs-4">Friends</p>
+
+        <!-- Grid of Cards -->
+        <div class="row g-4">
+
+            <!-- Card 1 -->
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100" id="card1">
+                    <img src="C:\Users\Preethi.J\OneDrive\Pictures\134051038739480326.jpg" class="card-img-top"
+                        alt="Friend">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Preethi</h5>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="viewWish('card1')">View Wish</a>
+                        <a href="#" class="btn btn-success btn-sm" onclick="showEnterForm('card1')">Enter Wish</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100" id="card2">
+                    <img src="C:\Users\Preethi.J\OneDrive\Pictures\134059362647366377.jpg" class="card-img-top"
+                        alt="Friend">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Anjali</h5>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="viewWish('card2')">View Wish</a>
+                        <a href="#" class="btn btn-success btn-sm" onclick="showEnterForm('card2')">Enter Wish</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100" id="card2">
+                    <img src="C:\Users\Preethi.J\OneDrive\Pictures\134063646635581952.jpg" class="card-img-top"
+                        alt="Friend">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Sai</h5>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="viewWish('card2')">View Wish</a>
+                        <a href="#" class="btn btn-success btn-sm" onclick="showEnterForm('card2')">Enter Wish</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100" id="card2">
+                    <img src="C:\Users\Preethi.J\OneDrive\Pictures\134079924623077042.jpg" class="card-img-top"
+                        alt="Friend">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Prasad</h5>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="viewWish('card2')">View Wish</a>
+                        <a href="#" class="btn btn-success btn-sm" onclick="showEnterForm('card2')">Enter Wish</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100" id="card2">
+                    <img src="C:\Users\Preethi.J\OneDrive\Pictures\134091530515282750.jpg" class="card-img-top"
+                        alt="Friend">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Sabitha</h5>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="viewWish('card2')">View Wish</a>
+                        <a href="#" class="btn btn-success btn-sm" onclick="showEnterForm('card2')">Enter Wish</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

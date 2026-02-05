@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Website</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .options li {
+            margin: 12px 0;
+        }
+
+        .options input[type="radio"] {
+            display: none;
+        }
+
+        .options label {
+            display: block;
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .options input[type="radio"]:checked+label {
+            background: #4facfe;
+            color: #fff;
+            border-color: #00f2fe;
+        }
+
+        .options label:hover {
+            background: #e0f7fa;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #4facfe;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #00c6fb;
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h2>Interactive Quiz</h2>
+        <div id="quiz"></div>
+        <button id="nextBtn" onclick="nextQuestion()">Next</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Which language runs in a web browser?",
+                options: ["Java", "C", "Python", "JavaScript"],
+                answer: "JavaScript"
+            },
+            {
+                question: "What does CSS stand for?",
+                options: ["Central Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Creative Style Sheets"],
+                answer: "Cascading Style Sheets"
+            },
+            {
+                question: "What does HTML stand for?",
+                options: ["Hypertext Markup Language", "Hypertext Markdown Language", "Hyperloop Machine Language", "None of the above"],
+                answer: "Hypertext Markup Language"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quiz = document.getElementById("quiz");
+            quiz.innerHTML = `
+        <div class="question">${quizData[currentQuestion].question}</div>
+        <ul class="options">
+          ${quizData[currentQuestion].options.map(opt =>
+                `<li>
+              <input type="radio" id="${opt}" name="option" value="${opt}">
+              <label for="${opt}">${opt}</label>
+            </li>`
+            ).join("")}
+        </ul>
+      `;
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (selected) {
+                if (selected.value === quizData[currentQuestion].answer) {
+                    score++;
+                }
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    loadQuestion();
+                } else {
+                    document.getElementById("quiz").innerHTML = "";
+                    document.getElementById("result").innerHTML =
+                        `🎉 Quiz finished! Your score: ${score}/${quizData.length}`;
+                    const nextBtn = document.getElementById("nextBtn");
+                    nextBtn.innerText = "Play Again";
+                    nextBtn.onclick = restartQuiz;
+                }
+            } else {
+                alert("Please select an option!");
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result").innerHTML = "";
+            const nextBtn = document.getElementById("nextBtn");
+            nextBtn.innerText = "Next";
+            nextBtn.onclick = nextQuestion;
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+
+</html>

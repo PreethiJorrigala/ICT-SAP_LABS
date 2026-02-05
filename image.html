@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Image</title>
+</head>
+
+<body>
+    <h1>JavaScript Demo</h1>
+    <button onclick="sayHello()">Click me</button>
+    <img id="image"
+        src="https://images.pexels.com/photos/236047/pexels-photo-236047.jpeg?cs=srgb&dl=landscape-nature-sky-236047.jpg&fm=jpg"
+        width="400" onclick="displayImg()">
+    <script>
+        function sayHello() {
+            alert("Hello! Good Morning");
+        }
+        function displayImg() {
+            const img = document.getElementById("image");
+            if (img.src == "https://images.pexels.com/photos/236047/pexels-photo-236047.jpeg?cs=srgb&dl=landscape-nature-sky-236047.jpg&fm=jpg")
+                img.src = "https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?cs=srgb&dl=daylight-environment-forest-459225.jpg&fm=jpg";
+            else
+                img.src = "https://images.pexels.com/photos/236047/pexels-photo-236047.jpeg?cs=srgb&dl=landscape-nature-sky-236047.jpg&fm=jpg";
+
+        }
+    </script>
+</body>

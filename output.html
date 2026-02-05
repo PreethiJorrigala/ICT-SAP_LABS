@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<head>
+    <title>output</title>
+</head>
+
+<body>
+    <input type="text" id="textInput" placeholder="Enter text"><br><br>
+    <button id="changeButton">Change Text</button>
+    <script>
+        document.getElementById('changeButton').addEventListener('click', function () {
+            document.getElementById('textInput').value = 'Changed';
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Grade Management</title>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #22c55e;
+            --danger: #ef4444;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #e0e7ff, #f0fdf4);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--text);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 36px;
+            color: var(--primary);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+            color: #374151;
+        }
+
+        /* ---------- Card ---------- */
+        .card {
+            background: var(--card);
+            max-width: 420px;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        #msg {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .error {
+            color: var(--danger);
+        }
+
+        .success {
+            color: var(--secondary);
+        }
+
+        /* ---------- Table ---------- */
+        .table-wrapper {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            color: white;
+            padding: 16px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        tr:hover {
+            background-color: #eef2ff;
+        }
+
+        .grade {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .remove-btn {
+            color: var(--danger);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .remove-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Student Grade Management</h1>
+
+    <div class="card">
+        <form id="studentForm">
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Student name">
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Email address">
+
+            <label>Roll No</label>
+            <input type="text" id="rollNo" placeholder="Roll number">
+
+            <label>Marks (0 - 100)</label>
+            <input type="number" id="marks" placeholder="Marks obtained">
+
+            <button type="button" onclick="addStudent()">Add Student</button>
+            <p id="msg"></p>
+        </form>
+    </div>
+
+    <h2>Student Records</h2>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Roll No</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <footer>
+        © 2026 Student Grade Management System
+    </footer>
+
+    <script>
+        const students = [];
+        const msg = document.getElementById("msg");
+        const tableBody = document.getElementById("tableBody");
+
+        function calculateGrade(marks) {
+            if (marks >= 90) return "A+";
+            if (marks >= 80) return "A";
+            if (marks >= 70) return "B";
+            if (marks >= 60) return "C";
+            if (marks >= 50) return "D";
+            return "F";
+        }
+
+        function addStudent() {
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const rollNo = document.getElementById("rollNo").value.trim();
+            const marks = Number(document.getElementById("marks").value);
+
+            msg.textContent = "";
+            msg.className = "";
+
+            if (!name || !email || !rollNo || isNaN(marks)) {
+                msg.textContent = "❌ All fields are required";
+                msg.className = "error";
+                return;
+            }
+
+            if (marks < 0 || marks > 100) {
+                msg.textContent = "❌ Marks must be between 0 and 100";
+                msg.className = "error";
+                return;
+            }
+
+            const grade = calculateGrade(marks);
+            students.push({ name, email, rollNo, marks, grade });
+            renderTable();
+
+            msg.textContent = `✅ ${name} added successfully`;
+            msg.className = "success";
+
+            document.getElementById("studentForm").reset();
+        }
+
+        function renderTable() {
+            tableBody.innerHTML = "";
+            students.forEach((s, index) => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${s.name}</td>
+                        <td>${s.email}</td>
+                        <td>${s.rollNo}</td>
+                        <td>${s.marks}</td>
+                        <td class="grade">${s.grade}</td>
+                        <td><span class="remove-btn" onclick="removeStudent(${index})">Remove</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function removeStudent(index) {
+            students.splice(index, 1);
+            renderTable();
+            msg.textContent = "✅ Student removed successfully";
+            msg.className = "success";
+        }
+    </script>
+
+</body>
+
+</html>

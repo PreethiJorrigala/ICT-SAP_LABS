@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>University Admission Form</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(to bottom, #e8eef5, #f4f6f9);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f3c88;
+            margin-top: 30px;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+
+        form {
+            width: 60%;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 1px solid #cfd8dc;
+            border-radius: 6px;
+            padding: 25px;
+        }
+
+        legend h2 {
+            color: #1f3c88;
+            padding: 0 10px;
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 6px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: normal;
+        }
+
+        .terms-box {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            font-size: 13px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"] {
+            background-color: #1f3c88;
+            color: white;
+            margin-right: 10px;
+        }
+
+        button[type="reset"] {
+            background-color: #9e9e9e;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>University Admission Form</h1>
+
+    <form action="abc.jsp" method="post">
+        <fieldset>
+            <legend>
+                <h2>Student Information</h2>
+            </legend>
+
+            <label for="full_name">Full Name</label>
+            <input type="text" name="full_name" placeholder="Enter full name" maxlength="50" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Enter email" required>
+
+            <label for="phn_no">Phone Number</label>
+            <input type="tel" name="phn_no" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}" maxlength="10"
+                required>
+
+            <label>Date of Birth</label>
+            <input type="date" required min="1995-01-01" max="2025-12-31">
+
+            <label>Gender</label>
+            <div class="radio-group">
+                <input type="radio" name="gender" value="male" required> Male
+                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="other"> Other
+            </div>
+
+            <br>
+
+            <label for="courses">Course Applied For</label>
+            <select name="courses" required>
+                <option value="">-- Select Course --</option>
+                <option value="BCA">BCA</option>
+                <option value="BSc">B.Sc</option>
+                <option value="MCA">MCA</option>
+                <option value="MSc">M.Sc</option>
+            </select>
+
+            <label for="photo">Upload Photo</label>
+            <input type="file" required>
+
+            <div class="terms-box">
+                <strong>Regular Updates:</strong><br>
+                It's essential to regularly review and update your terms and conditions to reflect changes
+                in your business practices or legal requirements. This ensures transparency and compliance.
+            </div>
+
+            <input type="checkbox" name="terms" required>
+            <label for="terms" style="display:inline;">I agree to the Terms & Conditions</label>
+
+            <div class="buttons">
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

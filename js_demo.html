@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<head>
+    <title>JavaScript Demo</title>
+</head>
+
+<body>
+    <h2>Arrow function vs normal function</h2>
+    <pre id="out"></pre>
+    <script>
+        const person = {
+            name: "Preethi",
+            regularGreet: function () { return 'regular this.name =' + this.name; },
+            arrowGreet: () => { return 'arrow this.name =' + person.name; }
+        };
+        const a = person.regularGreet();
+        const b = person.arrowGreet();
+
+        document.getElementById('out').textContent = a + '\n' + b;
+
+    </script>
+</body>
