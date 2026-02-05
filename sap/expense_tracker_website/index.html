@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h2>💸 Expense Tracker</h2>
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="#">History</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+        <div class="container">
+            <h1>Daily Expense Manager</h1>
+
+            <div class="balance">
+                <h2>Current Balance</h2>
+                <h3>₹ <span id="balance">0</span></h3>
+            </div>
+
+            <div class="summary">
+                <div class="income">
+                    <h4>Income</h4>
+                    <p>₹ <span id="income">0</span></p>
+                </div>
+                <div class="expense">
+                    <h4>Expense</h4>
+                    <p>₹ <span id="expense">0</span></p>
+                </div>
+            </div>
+
+            <h3>Transaction History</h3>
+            <ul id="transactionList"></ul>
+
+            <h3>Add New Transaction</h3>
+
+            <div class="form-control">
+                <input type="text" id="text" placeholder="Description (e.g. Grocery)">
+            </div>
+
+            <div class="form-control">
+                <input type="number" id="amount" placeholder="Amount">
+            </div>
+
+            <div class="form-control">
+                <select id="type">
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+
+            <button onclick="addTransaction()">Add Transaction</button>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 Expense Tracker | Manage your money wisely 💡
+    </footer>
+
+    <!-- SCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
