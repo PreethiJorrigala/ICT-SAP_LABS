@@ -1,0 +1,43 @@
+body {
+    font-family: Arial;
+    background: #f2f2f2;
+}
+
+.login-box {
+    width: 320px;
+    margin: 80px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px gray;
+    border-radius: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #2a7cff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover .captcha-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eee;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+.captcha {
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}

@@ -1,0 +1,21 @@
+<div class="login-box">
+  <h2>Angular Login</h2>
+
+  <label>Username</label>
+  <input type="text" [(ngModel)]="username">
+
+  <label>Password</label>
+  <input type="password" [(ngModel)]="password">
+
+  <div class="captcha-box">
+    <span class="captcha">{{generatedCaptcha}}</span>
+    <button (click)="generateCaptcha()">↻</button>
+  </div>
+
+  <label>Enter Captcha</label>
+  <input type="text" [(ngModel)]="userCaptcha">
+
+  <button (click)="login()">Login</button>
+
+  <p [style.color]="messageColor">{{message}}</p>
+</div>
