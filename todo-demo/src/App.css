@@ -1,0 +1,185 @@
+/* Page background */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+}
+
+/* Main container */
+.container {
+    width: 400px;
+    margin: 60px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form */
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+input[type="text"]:focus {
+    border-color: #4CAF50;
+}
+
+/* Buttons */
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #43a047;
+}
+
+/* Todo List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f9fafb;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li div {
+    display: flex;
+    gap: 6px;
+}
+
+li input {
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+
+/* completed task */
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+/* delete button */
+.delete-btn {
+    background: #e53935;
+}
+
+.delete-btn:hover {
+    background: #c62828;
+}
+
+.filters {
+    margin-bottom: 15px;
+}
+
+.filters button {
+    margin: 5px;
+    background: #2196f3;
+}
+
+.filters button:hover {
+    background: #1976d2;
+}
+
+.container>button {
+    margin: 5px;
+    background: #ff9800;
+}
+
+.container>button:hover {
+    background: #ef6c00;
+}
+
+.todo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.date {
+    font-size: 12px;
+    color: #666;
+    margin-top: 3px;
+}
+
+.overdue {
+    border-left: 5px solid red;
+    background: #ffe5e5;
+}
+
+.overdue .date {
+    color: red;
+    font-weight: bold;
+}
+
+.date-search {
+    margin: 15px 0;
+}
+
+.date-search input {
+    padding: 6px;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.date-search button {
+    background: #9c27b0;
+}
+
+.date-search button:hover {
+    background: #7b1fa2;
+}
+
+.todo-item {
+    margin: 12px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.todo-item input[type="text"] {
+    padding: 5px;
+}
+
+.todo-item button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
