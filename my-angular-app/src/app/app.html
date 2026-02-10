@@ -1,21 +1,62 @@
-<div class="login-box">
-  <h2>Angular Login</h2>
+<div class="bg">
 
-  <label>Username</label>
-  <input type="text" [(ngModel)]="username">
+  <div class="card">
 
-  <label>Password</label>
-  <input type="password" [(ngModel)]="password">
+    <!-- LOGIN PAGE -->
+    <div *ngIf="isLogin">
 
-  <div class="captcha-box">
-    <span class="captcha">{{generatedCaptcha}}</span>
-    <button (click)="generateCaptcha()">↻</button>
+      <h2>Login</h2>
+
+      <input type="email" placeholder="Email" [(ngModel)]="loginEmail">
+      <input type="password" placeholder="Password" [(ngModel)]="loginPassword">
+
+      <div class="captcha">
+        <span>{{loginCaptcha}}</span>
+        <button (click)="generateLoginCaptcha()">⟳</button>
+      </div>
+
+      <input type="text" placeholder="Enter Captcha" [(ngModel)]="loginUserCaptcha">
+
+      <p class="error" *ngIf="error">{{error}}</p>
+      <p class="success" *ngIf="success">{{success}}</p>
+
+      <button class="btn" (click)="login()">Login</button>
+
+      <p class="link">
+        Don’t have an account?
+        <a (click)="switchPage()">Register</a>
+      </p>
+
+    </div>
+
+    <!-- REGISTER PAGE -->
+    <div *ngIf="!isLogin">
+
+      <h2>Create Account</h2>
+
+      <input type="text" placeholder="Full Name" [(ngModel)]="name">
+      <input type="email" placeholder="Email" [(ngModel)]="email">
+      <input type="password" placeholder="Password" [(ngModel)]="password">
+
+      <div class="captcha">
+        <span>{{registerCaptcha}}</span>
+        <button (click)="generateRegisterCaptcha()">⟳</button>
+      </div>
+
+      <input type="text" placeholder="Enter Captcha" [(ngModel)]="registerUserCaptcha">
+
+      <p class="error" *ngIf="error">{{error}}</p>
+      <p class="success" *ngIf="success">{{success}}</p>
+
+      <button class="btn" (click)="register()">Register</button>
+
+      <p class="link">
+        Already have an account?
+        <a (click)="switchPage()">Login</a>
+      </p>
+
+    </div>
+
   </div>
 
-  <label>Enter Captcha</label>
-  <input type="text" [(ngModel)]="userCaptcha">
-
-  <button (click)="login()">Login</button>
-
-  <p [style.color]="messageColor">{{message}}</p>
 </div>
