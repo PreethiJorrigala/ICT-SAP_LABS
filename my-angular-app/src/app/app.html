@@ -1,62 +1,207 @@
-<div class="bg">
+<!-- ================= LOGIN / REGISTER PAGE ================= -->
 
-  <div class="card">
+<div *ngIf="!isLoggedIn" class="auth-container">
 
-    <!-- LOGIN PAGE -->
-    <div *ngIf="isLogin">
+  <div class="auth-card">
 
-      <h2>Login</h2>
 
-      <input type="email" placeholder="Email" [(ngModel)]="loginEmail">
-      <input type="password" placeholder="Password" [(ngModel)]="loginPassword">
+    <h2>{{ isLogin ? 'Login to Your Account' : 'Create New Account' }}</h2>
 
-      <div class="captcha">
-        <span>{{loginCaptcha}}</span>
-        <button (click)="generateLoginCaptcha()">⟳</button>
+    <!-- LOGIN FORM -->
+    <form *ngIf="isLogin" (ngSubmit)="login()">
+
+      <input type="email" placeholder="Enter Email" [(ngModel)]="loginData.email" name="loginEmail" required>
+
+      <input type="password" placeholder="Enter Password" [(ngModel)]="loginData.password" name="loginPassword"
+        required>
+
+      <!-- CAPTCHA -->
+      <div class="captcha-box">
+        <span class="captcha-text">{{ loginCaptcha }}</span>
+        <button type="button" (click)="refreshLoginCaptcha()">↻</button>
       </div>
 
-      <input type="text" placeholder="Enter Captcha" [(ngModel)]="loginUserCaptcha">
+      <input type="text" placeholder="Enter Captcha" [(ngModel)]="loginCaptchaInput" name="loginCaptchaInput" required>
 
-      <p class="error" *ngIf="error">{{error}}</p>
-      <p class="success" *ngIf="success">{{success}}</p>
+      <p class="error" *ngIf="error">{{ error }}</p>
 
-      <button class="btn" (click)="login()">Login</button>
+      <button type="submit" class="primary-btn">Login</button>
 
-      <p class="link">
-        Don’t have an account?
+      <p class="switch-text">
+        Don't have an account?
         <a (click)="switchPage()">Register</a>
       </p>
 
-    </div>
+    </form>
 
-    <!-- REGISTER PAGE -->
-    <div *ngIf="!isLogin">
 
-      <h2>Create Account</h2>
+    <!-- REGISTER FORM -->
+    <form *ngIf="!isLogin" (ngSubmit)="register()">
 
-      <input type="text" placeholder="Full Name" [(ngModel)]="name">
-      <input type="email" placeholder="Email" [(ngModel)]="email">
-      <input type="password" placeholder="Password" [(ngModel)]="password">
+      <input type="text" placeholder="Full Name" [(ngModel)]="registerData.name" name="regName" required>
 
-      <div class="captcha">
-        <span>{{registerCaptcha}}</span>
-        <button (click)="generateRegisterCaptcha()">⟳</button>
+      <input type="email" placeholder="Email" [(ngModel)]="registerData.email" name="regEmail" required>
+
+      <input type="password" placeholder="Password" [(ngModel)]="registerData.password" name="regPassword" required>
+
+      <!-- CAPTCHA -->
+      <div class="captcha-box">
+        <span class="captcha-text">{{ registerCaptcha }}</span>
+        <button type="button" (click)="refreshRegisterCaptcha()">↻</button>
       </div>
 
-      <input type="text" placeholder="Enter Captcha" [(ngModel)]="registerUserCaptcha">
+      <input type="text" placeholder="Enter Captcha" [(ngModel)]="registerCaptchaInput" name="registerCaptchaInput"
+        required>
 
-      <p class="error" *ngIf="error">{{error}}</p>
-      <p class="success" *ngIf="success">{{success}}</p>
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <p class="success" *ngIf="success">{{ success }}</p>
 
-      <button class="btn" (click)="register()">Register</button>
+      <button type="submit" class="primary-btn">Register</button>
 
-      <p class="link">
+      <p class="switch-text">
         Already have an account?
         <a (click)="switchPage()">Login</a>
       </p>
 
-    </div>
+    </form>
+
 
   </div>
+</div>
 
+<!-- ================= DASHBOARD ================= -->
+
+<div *ngIf="isLoggedIn" class="layout">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+    <h2 class="logo">🎓 LearnHub</h2>
+
+
+    <ul class="menu">
+      <li (click)="setSection('home')" [class.active]="activeSection==='home'">🏠 Dashboard</li>
+      <li (click)="setSection('courses')" [class.active]="activeSection==='courses'">📚 My Courses</li>
+      <li (click)="setSection('progress')" [class.active]="activeSection==='progress'">📈 Progress</li>
+      <li (click)="setSection('certificates')" [class.active]="activeSection==='certificates'">🏆 Certificates</li>
+      <li (click)="setSection('profile')" [class.active]="activeSection==='profile'">👤 Profile</li>
+      <li (click)="setSection('settings')" [class.active]="activeSection==='settings'">⚙ Settings</li>
+    </ul>
+
+    <button class="logout-btn" (click)="logout()">Logout</button>
+
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+
+  <main class="content">
+
+
+    <!-- HOME -->
+    <div *ngIf="activeSection==='home'">
+      <h1>Welcome, {{currentUser?.name}} 👋</h1>
+      <p>You have successfully logged in.</p>
+    </div>
+
+
+    <!-- COURSES -->
+    <div *ngIf="activeSection==='courses'">
+      <h2>Available Courses</h2>
+
+      <div class="course-grid">
+
+        <div class="course-card">
+          <h3>Web Development</h3>
+          <p>HTML, CSS, JavaScript, Angular</p>
+          <button (click)="startLearning('web')">Start Learning</button>
+        </div>
+
+        <div class="course-card">
+          <h3>Python Programming</h3>
+          <p>Basics to Advanced with Projects</p>
+          <button (click)="startLearning('python')">Start Learning</button>
+        </div>
+
+        <div class="course-card">
+          <h3>Data Structures</h3>
+          <p>Arrays, Linked List, Stack, Queue</p>
+          <button (click)="startLearning('dsa')">Start Learning</button>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- PROGRESS -->
+    <div *ngIf="activeSection==='progress'">
+      <h2>Your Learning Progress</h2>
+      <p>Web Development : 40%</p>
+      <p>Python : 20%</p>
+      <p>Data Structures : 10%</p>
+    </div>
+
+
+    <!-- CERTIFICATES -->
+    <div *ngIf="activeSection==='certificates'">
+      <h2>Your Certificates</h2>
+      <p>No certificates earned yet.</p>
+    </div>
+
+
+    <!-- PROFILE -->
+    <div *ngIf="activeSection==='profile'">
+      <h2>Your Profile</h2>
+      <p><b>Name:</b> {{currentUser?.name}}</p>
+      <p><b>Email:</b> {{currentUser?.email}}</p>
+    </div>
+
+
+    <!-- SETTINGS -->
+    <div *ngIf="activeSection==='settings'">
+      <h2>Settings</h2>
+      <p>Dark mode and password change options coming soon.</p>
+    </div>
+
+    <!-- ================= COURSE PLAYER ================= -->
+
+    <div *ngIf="courseMode" class="course-player">
+
+      <div class="player-header">
+        <h2>{{ courses[selectedCourseKey].title }}</h2>
+        <button class="logout-btn" (click)="exitCourse()">Exit Course</button>
+      </div>
+
+      <div class="player-body">
+
+
+        <!-- lesson list -->
+        <div class="lesson-sidebar">
+          <div *ngFor="let lesson of courses[selectedCourseKey].lessons; let i = index" (click)="currentLessonIndex = i"
+            [class.active]="i === currentLessonIndex" class="lesson-item">
+            {{ i + 1 }}. {{ lesson.title }}
+          </div>
+        </div>
+
+        <!-- video area -->
+        <div class="video-area">
+          <iframe width="100%" height="420"
+            [src]="getSafeVideoUrl(courses[selectedCourseKey].lessons[currentLessonIndex].video)" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+
+
+          <div class="lesson-controls">
+            <button (click)="prevLesson()">Previous</button>
+            <button (click)="nextLesson()">Next</button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </main>
 </div>
