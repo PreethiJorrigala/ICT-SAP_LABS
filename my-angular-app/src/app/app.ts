@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, ViewChild, ElementRef, AfterViewInit,
   OnInit,
   Inject,
   PLATFORM_ID
@@ -17,7 +17,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./app.css']
 })
 
-export class App implements OnInit {
+export class App implements OnInit, AfterViewInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -47,11 +47,11 @@ export class App implements OnInit {
   };
 
   /* ================= CAPTCHA ================= */
-  loginCaptcha: string = '';
-  registerCaptcha: string = '';
+  // loginCaptcha: string = '';
+  // registerCaptcha: string = '';
 
-  loginCaptchaInput: string = '';
-  registerCaptchaInput: string = '';
+  // loginCaptchaInput: string = '';
+  // registerCaptchaInput: string = '';
 
   error = '';
   success = '';
@@ -83,15 +83,125 @@ export class App implements OnInit {
     return captcha;
   }
 
+  /* ================= CAPTCHA CANVAS ================= */
+
+  @ViewChild('loginCaptchaCanvas') loginCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('registerCaptchaCanvas') registerCanvas!: ElementRef<HTMLCanvasElement>;
+
+  loginCaptcha: string = '';
+  registerCaptcha: string = '';
+
+  loginCaptchaInput: string = '';
+  registerCaptchaInput: string = '';
+
+  ngAfterViewInit() {
+
+    // VERY IMPORTANT: stop SSR from running canvas
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    setTimeout(() => {
+      if (this.loginCanvas) {
+        this.generateLoginCaptcha();
+      }
+
+      if (this.registerCanvas) {
+        this.generateRegisterCaptcha();
+      }
+    }, 200);
+
+  }
+
+
+  /* ===== RANDOM TEXT ===== */
+  private randomText(length: number): string {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
+  /* ===== DRAW CAPTCHA ===== */
+  private drawCaptcha(canvas: HTMLCanvasElement, text: string) {
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // background
+    ctx.fillStyle = '#eef2ff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // noise lines
+    for (let i = 0; i < 6; i++) {
+      ctx.strokeStyle = `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},0.7)`;
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+      ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+      ctx.stroke();
+    }
+
+    // characters
+    ctx.font = 'bold 26px Arial';
+
+    for (let i = 0; i < text.length; i++) {
+
+      const x = 15 + i * 25;
+      const y = 30 + Math.random() * 8;
+      const angle = (Math.random() - 0.5) * 0.7;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.fillStyle = `rgb(${Math.random() * 120},${Math.random() * 120},${Math.random() * 120})`;
+      ctx.fillText(text[i], 0, 0);
+      ctx.restore();
+    }
+
+    // dots
+    for (let i = 0; i < 40; i++) {
+      ctx.fillStyle = `rgba(0,0,0,${Math.random()})`;
+      ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
+    }
+  }
+
+  /* ===== LOGIN CAPTCHA ===== */
+  generateLoginCaptcha() {
+    this.loginCaptcha = this.randomText(5);
+    setTimeout(() => {
+      this.drawCaptcha(this.loginCanvas.nativeElement, this.loginCaptcha);
+    });
+  }
+
   refreshLoginCaptcha() {
-    this.loginCaptcha = this.generateCaptcha();
-    this.loginCaptchaInput = '';
+    this.generateLoginCaptcha();
+  }
+
+  /* ===== REGISTER CAPTCHA ===== */
+  generateRegisterCaptcha() {
+    this.registerCaptcha = this.randomText(5);
+    setTimeout(() => {
+      this.drawCaptcha(this.registerCanvas.nativeElement, this.registerCaptcha);
+    });
   }
 
   refreshRegisterCaptcha() {
-    this.registerCaptcha = this.generateCaptcha();
-    this.registerCaptchaInput = '';
+    this.generateRegisterCaptcha();
   }
+
+  // refreshLoginCaptcha() {
+  //   this.loginCaptcha = this.generateCaptcha();
+  //   this.loginCaptchaInput = '';
+  // }
+
+  // refreshRegisterCaptcha() {
+  //   this.registerCaptcha = this.generateCaptcha();
+  //   this.registerCaptchaInput = '';
+  // }
 
   /* convert youtube link to safe url */
   getSafeVideoUrl(url: string): SafeResourceUrl {

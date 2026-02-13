@@ -2,7 +2,7 @@
 
 <div *ngIf="!isLoggedIn" class="auth-container">
 
-  <div class="auth-card">
+  <div class="card">
 
 
     <h2>{{ isLogin ? 'Login to Your Account' : 'Create New Account' }}</h2>
@@ -17,11 +17,13 @@
 
       <!-- CAPTCHA -->
       <div class="captcha-box">
-        <span class="captcha-text">{{ loginCaptcha }}</span>
+        <canvas #loginCaptchaCanvas width="160" height="50"></canvas>
         <button type="button" (click)="refreshLoginCaptcha()">↻</button>
       </div>
 
+
       <input type="text" placeholder="Enter Captcha" [(ngModel)]="loginCaptchaInput" name="loginCaptchaInput" required>
+
 
       <p class="error" *ngIf="error">{{ error }}</p>
 
@@ -46,12 +48,14 @@
 
       <!-- CAPTCHA -->
       <div class="captcha-box">
-        <span class="captcha-text">{{ registerCaptcha }}</span>
+        <canvas #registerCaptchaCanvas width="160" height="50"></canvas>
         <button type="button" (click)="refreshRegisterCaptcha()">↻</button>
       </div>
 
+
       <input type="text" placeholder="Enter Captcha" [(ngModel)]="registerCaptchaInput" name="registerCaptchaInput"
         required>
+
 
       <p class="error" *ngIf="error">{{ error }}</p>
       <p class="success" *ngIf="success">{{ success }}</p>
