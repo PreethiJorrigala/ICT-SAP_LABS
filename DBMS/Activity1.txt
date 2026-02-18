@@ -1,0 +1,22 @@
+Exercise 1:
+1. College management system
+2. Online shopping system
+3. Banking system
+
+Exercise 2:
+Data is raw, unprocessed facts, whereas information is meaningful data that has been processed and organized.
+
+Exercise 3:
+3 RDBMS software:
+	MySQL
+	Oracle Database
+	Microsoft SQL Server
+
+Exercise 4:
+order(orderId, customerId, amount)
+customer(customerId, product)
+primary key: OrderId
+foreign key: customerId
+
+Exercise 5:
+An RDBMS is preferred over a file-based system because it reduces data redundancy and provides better security, data integrity, and easy data access.

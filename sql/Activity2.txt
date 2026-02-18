@@ -1,0 +1,23 @@
+Exercise 1:
+A query processor interprets an SQL query, checks it for errors, and executes it to retrieve or update data from the database.
+
+Exercise 2:
+Atomicity: 
+	Transaction is either completed or rollback
+	Example: During an online money transfer, if money is deducted from your account but not added to the receiver, the transaction is cancelled and your money is returned when you make a transaction .
+
+Consistency:
+	The database must remain correct before and after the transaction.
+	Example: If a bank account must not go below ₹0, the system will stop a withdrawal that breaks this rule.
+
+Isolation:
+	Multiple transactions do not affect each other while running.
+	Example: Two people booking the last train seat at the same time — only one booking succeeds.
+
+Durability:
+	Once a transaction is completed, it is permanently saved even after power failure.
+	Example: After payment on a shopping site, the order remains recorded even if the system crashes.
+
+Exercise 3:
+We need indexing in a database to speed up data retrieval, because it allows the system to find records quickly without scanning the entire table.
+	

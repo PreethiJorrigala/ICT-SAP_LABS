@@ -1,0 +1,19 @@
+create table Employees(EmpID varchar(20) primary, Name varchar(20), salary number);
+
+insert into Employees(1,'John',50000);
+
+select * from Employees;
+
+select name from Employees;
+
+truncate from Employees;
+
+-------------------------------------
+MCQS
+
+1.Sql is mainly used for managing relational databases
+
+2.DML - alter
+
+3.retreves data - select
+
