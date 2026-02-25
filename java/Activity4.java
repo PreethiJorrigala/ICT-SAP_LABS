@@ -8,7 +8,7 @@ public class Activity4 {
 
             String line;
 
-            while ((line = br.readLine()) != null) {
+             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
         }
