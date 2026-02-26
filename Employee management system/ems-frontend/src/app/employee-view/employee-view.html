@@ -1,0 +1,15 @@
+<h2>Employee Details</h2>
+
+
+
+<div *ngIf="employee as emp">
+
+    <p><b>ID:</b> {{emp.id}}</p>
+    <p><b>Name:</b> {{emp.name}}</p>
+    <p><b>Email:</b> {{emp.email}}</p>
+
+    <p><b>Salary:</b> {{emp.salary}}</p>
+
+</div>
+
+<a routerLink="/">Back</a>
